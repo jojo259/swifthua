@@ -307,9 +307,11 @@ def wordPage(displayWord, curUsername):
 	if wordDoc == None:
 		return 'word not found'
 
-	flaskData['wordDoc'] = wordDoc
+	userWordData = None
+	if curUsername != None:
+		userWordData = database.usersCol.find_one({'_id': curUsername}, {'_id': 0, 'words': {'$elemMatch': {'simplified': displayWord}}}).get('words', [None])[0]
 
-	return flask.render_template('word.html.jinja', flaskData = flaskData)
+	return flask.render_template('word.html.jinja', flaskData = flaskData, wordDoc = wordDoc, userWordData = userWordData)
 
 # REWRITE
 @app.route('/login', methods = ['GET', 'POST'])

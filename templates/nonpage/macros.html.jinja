@@ -64,3 +64,30 @@ datasets: [
 	{% endfor %}
 	{{ displayGraph(graphId, formattedDatas) }}
 {% endmacro %}
+
+{% macro wordData(wordDoc, userWordData = None, hyperlinkWord = True) %}
+	{% if userWordData == None %}
+		{{ wordDoc['_id'] }} / {{ wordDoc['traditional'] }} - {{ wordDoc['pinyin'] }} - {{ wordDoc['english'] }}
+	{% else %}
+		{% if hyperlinkWord %}
+			<a href="/word/{{ wordDoc['_id'] }}">{{ wordDoc['_id'] }}</a> - {{ wordDoc['pinyin'] }} - {{ wordDoc['english'] }}
+		{% else %}
+			{{ wordDoc['_id'] }} - {{ wordDoc['pinyin'] }} - {{ wordDoc['english'] }}
+		{% endif %}
+		<br><br>Word strength:
+		{% set testTypes = {'draw': 'red', 'pronounce': 'red', 'define': 'red'} %}
+		{% for testType in testTypes %}
+			{% set testTypeColor = 'red' %}
+			{% if userWordData['wordstrength'][testType] >= 7 %}
+				{% set testTypeColor = 'orange' %}
+			{% endif %}
+			{% if userWordData['wordstrength'][testType] >= 13 %}
+				{% set testTypeColor = 'green' %}
+			{% endif %}
+			<br>{{ testType.capitalize() }}:
+			<span style = "font-weight: bold; float: right; color: {{ testTypeColor }}">
+				{{ userWordData['wordstrength'][testType] | int }}
+			</span>
+		{% endfor %}
+	{% endif %}
+{% endmacro %}

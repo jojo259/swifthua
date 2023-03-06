@@ -1,5 +1,6 @@
 {% extends "nonpage/layout.html.jinja" %}
 {% from "nonpage/macros.html.jinja" import removeWordButton %}
+{% from "nonpage/macros.html.jinja" import wordData %}
 <!-- rewrite page -->
 {% block content %}
 	<div class = "centered">
@@ -101,50 +102,7 @@
 			<div class = "backgroundandbordered smallpadding smallmargin smallfont" style = "width:860px">
 				{% for curWord in flaskData['listWordsDictLearning'].values() %}
 					<div class = "backgroundandbordered smallpadding smallmargin smallfont">
-						<a href="/word/{{ curWord['_id'] }}">{{ curWord['_id'] }}</a> - {{ curWord['pinyin'] }} - {{ curWord['english'] }}
-						<div class = "editoptionstoggled smallfont">
-							<br>Word strength:
-							
-							<br>Drawing:
-							{% set drawColor = 'red' %}
-							{% if curWord['userData']['wordstrength']['draw'] >= 7 %}
-								{% set drawColor = 'orange' %}
-							{% endif %}
-							{% if curWord['userData']['wordstrength']['draw'] >= 13 %}
-								{% set drawColor = 'green' %}
-							{% endif %}
-
-							<span style = "font-weight: bold; float: right; color: {{ drawColor }}">
-								{{ curWord['userData']['wordstrength']['draw'] | int }}
-							</span>
-
-							<br>Pronouncing:
-							{% set pronounceColor = 'red' %}
-							{% if curWord['userData']['wordstrength']['pronounce'] >= 7 %}
-								{% set pronounceColor = 'orange' %}
-							{% endif %}
-							{% if curWord['userData']['wordstrength']['pronounce'] >= 13 %}
-								{% set pronounceColor = 'green' %}
-							{% endif %}
-
-							<span style = "font-weight: bold; float: right; color: {{ pronounceColor }}">
-								{{ curWord['userData']['wordstrength']['pronounce'] | int }}
-							</span>
-							
-							<br>Defining:
-							{% set defineColor = 'red' %}
-							{% if curWord['userData']['wordstrength']['define'] >= 7 %}
-								{% set defineColor = 'orange' %}
-							{% endif %}
-							{% if curWord['userData']['wordstrength']['define'] >= 13 %}
-								{% set defineColor = 'green' %}
-							{% endif %}
-
-							<span style = "font-weight: bold; float: right; color: {{ defineColor }}">
-								{{ curWord['userData']['wordstrength']['define'] | int }}
-							</span>
-						</div>
-
+						{{ wordData(curWord, curWord['userData'], hyperlinkWord = True) }}
 						{{ removeWordButton(curWord) }}
 					</div>
 				{% endfor %}

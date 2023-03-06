@@ -1,12 +1,9 @@
 {% extends "nonpage/layout.html.jinja" %}
+{% from "nonpage/macros.html.jinja" import wordData %}
 {% block content %}
 	<div class = "centered">
 		<div class = "backgroundandbordered smallmargin smallpadding">
-			{{ flaskData['wordDoc']['_id'] }} / {{ flaskData['wordDoc']['traditional'] }}
-			<br>
-			{{ flaskData['wordDoc']['pinyin'] }}
-			<br>
-			{{ flaskData['wordDoc']['english'] }}
+			{{ wordData(wordDoc, userWordData, hyperlinkWord = False) }}
 		</div>
 	</div>
 	<!-- add simplified/traditional "same" notice + current user word data.
