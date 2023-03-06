@@ -1,6 +1,6 @@
 {% macro removeWordButton(curWord = {'_id': ''}) %}
 	<div id="removewordbuttoncontainer-{{ curWord['_id'] }}" class="editoptionstoggled" hidden="hidden">
-		<div onclick="removeWordButton('{{ curWord['_id'] }}')" class="actionbutton backgroundandbordered" style="width: 256px; height: 64px; text-align: center; vertical-align: middle; line-height: 64px; font-size: 24px;">
+		<div onclick="removeWordButton('{{ curWord['_id'] }}')" class="actionbutton backgroundandbordered removewordbutton">
 			Remove word from list
 		</div>
 	</div>
