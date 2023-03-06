@@ -1,4 +1,4 @@
-# Public pages (potentially incomplete)
+# Public pages (outdated)
 
 - landing
 - study
@@ -7,7 +7,7 @@
 - profile
 - settings
 
-# API routes (potentially incomplete)
+# API routes (outdated)
 
 - get words
 - get queuesize
@@ -28,6 +28,7 @@
 - switch to some client-side rendering in order to avoid client-side state management (or do client-side state management i guess)?; or just add a "reload to refresh" button
 - stop storing state in html in study.js
 - revamp profile page
+- rename settings fields
 
 # Potential credits
 
