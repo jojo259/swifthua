@@ -1,0 +1,251 @@
+@font-face { /* latin */
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(/static/fonts/robotolatin.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face { /* latin-ext */
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(/static/fonts/robotolatinext.woff2) format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+button, input[type=submit] {
+	font-weight: bold;
+
+	margin: 16px;
+
+	cursor: pointer;
+
+	background-color: #444;
+	border: 2px black solid;
+	color: white;
+}
+
+button:hover, input[type=submit]:hover {
+	filter: brightness(0.8);
+}
+
+div {
+	color: #eee;
+	font-family:Roboto;
+	font-size:64px;
+}
+
+.centeredabsolute{
+	margin-left:auto;
+	margin-right:auto;
+	position: absolute;
+}
+
+body{ /* partly yoinked */
+	background-color:#333;
+	margin: 0;
+	min-width:668px;
+	width: auto !important;
+	width:668px;
+}
+
+#extraqueueinfo {
+	display: none;
+}
+
+#queueinfo:hover + #extraqueueinfo {
+	display: block;
+}
+
+.wordinfobox{
+	width: 360px;
+	height: 300px;
+
+	position: relative;
+	top: calc(-480px - 16px + 16px + 90px);
+	left: calc(-360px - 96px - 32px);
+}
+
+.canvas-dot{
+	height: 32px;
+	width: 32px;
+	background-color: #eee;
+	border-radius: 50%;
+	position: absolute;
+	z-index: 99999;
+	pointer-events: none;
+}
+
+.ellipsisoverflow{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.curwordinfo{
+	z-index: 33;
+
+	width: 80vw;
+	height: 80px;
+
+	text-align: center;
+}
+
+.charnavbutton-left {
+	left: -96px;
+}
+.charnavbutton-right {
+	left: 512px;
+}
+
+.sidebuttoncontainer{
+	left: calc(480px + 128px);
+}
+
+.centered {
+	display: table;
+	margin: 0 auto;
+}
+
+.proficiencybutton{
+	width: 160px;
+	height: 72px;
+	text-align: center;
+	cursor: pointer;
+	line-height: 72px;
+	text-align: center;
+	font-size: 48px;
+	z-index: 32;
+}
+.sidebutton{
+	user-select:none;
+	cursor: pointer;
+	width:64px;
+	height:64px;
+}
+
+.backgroundandbordered{
+	outline: 2px solid #ccc;
+	background-color: #222;
+}
+
+.smallmargin{ /* breaks centered */
+	margin: 16px;
+}
+
+.smallpadding{
+	padding: 16px;
+}
+
+.bigfont{
+	font-size: 64px;
+}
+
+.smallfont{
+	font-size: 32px;
+}
+
+.smallerfont{
+	font-size: 24px;
+}
+
+.tinyfont{
+	font-size: 16px;
+}
+
+.actionbutton{
+	cursor: pointer;
+	user-select:none;
+}
+.actionbutton:hover{
+	background-color: #111;
+}
+.actionbutton:active {
+	position: relative;
+	top: 1px;
+}
+
+a{
+  color: #00f;
+  text-decoration: none;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clickabletext{
+  text-decoration: none;
+}
+.clickabletext:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+input[type='checkbox'] {
+	width: 32px;
+	height: 32px;
+	accent-color: #999;
+}
+
+.tempnotification{
+	animation: fadeOut 1s 1s forwards, setHeightToZero 0s 2s forwards;
+	padding: 16px;
+	margin: 16px;
+	width: 256px;
+	height: 64px;
+	font-size: 24px;
+	z-index: 6900;
+	position: relative;
+}
+@keyframes fadeOut {
+	from {opacity: 1}
+	to {opacity: 0}
+}
+@keyframes setHeightToZero {
+	to {height: 0px; margin: 0; padding: 0; outline-width: 0px; border: 0px; width: 0px; font-size: 0px; z-index: 0;}
+}
+
+input[type='text'], textarea {
+	background-color: #ccc;
+}
+
+@media all and (max-width: 1900px) {
+	.hide1900 { display: none; }
+}
+
+@media all and (max-width: 1500px) {
+	.hide1500 { display: none; }
+
+	.wordinfobox{
+		left: 60px;
+		position: relative;
+		top: 256px;
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.hide1200 { display: none; }
+}
+
+@media all and (max-width: 1000px) {
+	.hide1000 { display: none; }
+
+	.charnavbutton-left {
+		left: 16px;
+	}
+	.charnavbutton-right {
+		left: 400px;
+	}
+
+	.sidebuttoncontainer{
+		left: calc(480px + 32px);
+	}
+}
+
+
+@media all and (max-width: 800px) {
+	.hide800 { display: none; }
+}

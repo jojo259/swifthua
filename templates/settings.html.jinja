@@ -1,0 +1,100 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block content %}
+	<div class = "centered">
+		Settings
+	</div>
+	{% if alertText %}
+		<div class = "centered" style = "color: {{ alertCol }}; font-size: 32px; text-align: center;">
+			<strong>{{ alertText }}</strong>
+		</div>
+	{% endif %}
+	<div class = "centered">
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+			<form action="/settings" method="POST">
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="traditional">Traditional:</label>
+					<input name="traditional" type="checkbox" id="traditional" style="float: right"
+						{% if flaskData['userSettings']['useTraditional'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="pronouncehard">Hide definition on pronounce tests:</label>
+					<input name="pronouncehard" type="checkbox" id="pronouncehard" style="float: right"
+						{% if flaskData['userSettings']['pronounceHard'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="definehard">Hide pronunciation on define tests:</label>
+					<input name="definehard" type="checkbox" id="definehard" style="float: right"
+						{% if flaskData['userSettings']['defineHard'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<br>
+				<hr style="height:1px;border-width:0;background-color:#eee">
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="disabletestdraw">Disable drawing tests:</label>
+					<input name="disabletestdraw" type="checkbox" id="disabletestdraw" style="float: right"
+						{% if flaskData['userSettings']['disableTestDraw'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="disabletestpronounce">Disable pronouncing tests:</label>
+					<input name="disabletestpronounce" type="checkbox" id="disabletestpronounce" style="float: right"
+						{% if flaskData['userSettings']['disableTestPronounce'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="disabletestdefine">Disable defining tests:</label>
+					<input name="disabletestdefine" type="checkbox" id="disabletestdefine" style="float: right"
+						{% if flaskData['userSettings']['disableTestDefine'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<br>
+				<hr style="height:1px;border-width:0;background-color:#eee">
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="playqueueaudio">Sound notification when queue large:</label>
+					<input name="playqueueaudio" type="checkbox" id="playqueueaudio" style="float: right"
+						{% if flaskData['userSettings']['playQueueAudio'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<br>
+				<hr style="height:1px;border-width:0;background-color:#eee">
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="email">Email:</label>
+					<input class="smallerfont" name="email" type="text" id="email" value="{{ flaskData['userSettings']['email'] }}" style="float: right">
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="discord">Discord:</label>
+					<input class="smallerfont" name="discord" type="text" id="discord" value="{{ flaskData['userSettings']['discord'] }}" style="float: right">
+				</div>
+				
+				<br>
+				<div style="margin-top: 8px">
+					<input type="submit" value="Save" class="smallfont"></input>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block content %}
+	{% if flaskData['curUsername'] != None %}
+		<div class = "centered">
+			<div class = "backgroundandbordered smallpadding smallmargin">
+				User current list: {{ flaskData['userSettings']['curList'] }}
+			</div>
+		</div>
+		<div class = "centered">
+			<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+				New list name:
+				<input class="smallfont" name="listname" type="text" id="listname">
+				<button onclick="attemptCreateList()" class="smallfont">
+					Create new list
+				</button>
+			</div>
+		</div>
+	{% endif %}}
+	<div class = "centered">
+		<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+			<div class = "centered smallfont">
+				Search lists
+			</div>
+			<div class = "centered">
+				<input class="smallfont" name="searchtext" type="text" id="searchtext">
+				<button onclick="doListsSearch()" class="smallfont">
+					Search
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class = "centered">
+		<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+			{% for listName, listNum in allLists.items() %}
+				<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+					<a href="/list/{{ listName }}">{{ listName }}</a> - {{ listNum }} words
+					{% if flaskData['curUsername'] != None %}
+						<button onclick = "attemptChooseList( '{{listName}}' )" style = "width: 128px; height: 32px">Choose list</button>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div class = "centered">
+		<div class = "smallfont">
+			Page {{ atPage }}
+		</div>
+	</div>
+	<div class = "centered">
+		{% if atPage > 1 %}
+			<button onclick = "location.href=updateQueryString('page', '{{ atPage - 1 }}')" style = "width: 128px; height: 32px">Previous page</button>
+		{% endif %}
+		{% if atPage < maxPage %}
+			<button onclick = "location.href=updateQueryString('page', '{{ atPage + 1 }}')" style = "width: 128px; height: 32px">Next page</button>
+		{% endif %}
+	</div>
+	<script src="../static/scripts/lists.js"></script>
+{% endblock %}

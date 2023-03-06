@@ -1,0 +1,102 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block head %}
+	{{ super() }}
+	<style>
+		body {
+			overscroll-behavior-y: contain;
+		}
+
+		html, body {touch-action: none;}
+
+		.drawcursor {
+			/*cursor: url(/static/images/drawcursor.png) 16 16, auto;*/
+			cursor: crosshair;
+		}
+	</style>
+{% endblock %}
+{% block content %}
+	<script src="/static/scripts/hanzi-writer.js"></script>
+	<div class = "centered">
+		<div style="position:relative; width:480px; height:480px">
+			<div id="canvas-container" class="backgroundandbordered" style="position:relative; width:480px; height:480px;">
+				<canvas id="canvas-background" style="user-select:none; z-index: 1; position:absolute; left:0px; top:0px;" width="480" height="480"></canvas>
+				<canvas id="canvas-draw" class="drawcursor" style="user-select:none; z-index: 2; position:absolute; left:0px; top:0px;" width="480" height="480"></canvas>
+				<div id="charnavbuttons" style="width: 480px; position: absolute; top: calc(240px - 64px)">
+					<div id="charnavbutton-left" onclick="charNav(-1)" hidden="hidden" class="charnavbutton-left actionbutton backgroundandbordered" style="z-index: 99; user-select:none; position: absolute; cursor: pointer; width: 64px; height: 128px; text-align:center; line-height: 128px;">
+						<
+					</div>
+					<div id="charnavbutton-right" onclick="charNav(1)" hidden="hidden" class="charnavbutton-right actionbutton backgroundandbordered" style="z-index: 99; user-select:none; position: absolute; cursor: pointer; width: 64px; height: 128px; text-align:center; line-height: 128px;">
+						>
+					</div>
+				</div>
+			</div>
+			<div class="sidebuttoncontainer" style="position:absolute; top: calc(240px - ((32px + 2px) * 6))">
+				<div onclick="addWordButton()" class="sidebutton actionbutton backgroundandbordered" title="Add random new word to queue" style="position: absolute; top: 0px">
+					<img src="/static/images/add.png" alt="Add" width="48" height="48" style="position: absolute; top: 8px; left: 8px">
+				</div>
+				<div onclick="fullHint()" class="sidebutton actionbutton backgroundandbordered" title="Show answer" style="position: absolute; top: 64px">
+					<img src="/static/images/hint.png" alt="Hint" width="48" height="48" style="position: absolute; top: 8px; left: 8px">
+				</div>
+				<div onclick="clearCanvasButton()" class="sidebutton actionbutton backgroundandbordered" title="Clear canvas" style="position: absolute; top: 128px">
+					<img src="/static/images/clear.png" alt="Clear" width="48" height="48" style="position: absolute; top: 8px; left: 8px">
+				</div>
+				<div onclick="playWordAudio()" class="sidebutton actionbutton backgroundandbordered" title="Play audio" style="position: absolute; top: 192px">
+					<img src="/static/images/radio.png" alt="Audio" width="48" height="48" style="position: absolute; top: 8px; left: 8px">
+				</div>
+				<div onclick="changeVolumeButton()" id="volumebutton" class="sidebutton actionbutton backgroundandbordered" title="Change volume" style="position: absolute; top: 256px">
+					<img id="sidebutton-volume-off" src="/static/images/volumeoff.png" alt="Volume off" width="48" height="48" style="position: absolute; top: 8px; left: 8px" {% if flaskData['userSettings']['curVolume'] != 0 %} hidden="hidden" {% endif %}>
+					<img id="sidebutton-volume-low" src="/static/images/volumelow.png" alt="Volume low" width="48" height="48" style="position: absolute; top: 8px; left: 8px" {% if flaskData['userSettings']['curVolume'] != 1 %} hidden="hidden" {% endif %}>
+					<img id="sidebutton-volume-high" src="/static/images/volumehigh.png" alt="Volume high" width="48" height="48" style="position: absolute; top: 8px; left: 8px" {% if flaskData['userSettings']['curVolume'] != 2 %} hidden="hidden" {% endif %}>
+				</div>
+				<div onclick="getNewWordsButton()" class="sidebutton actionbutton backgroundandbordered" title="Refresh word queue" style="position: absolute; top: 320px">
+					<img src="/static/images/refresh.png" alt="Refresh" width="48" height="48" style="position: absolute; top: 8px; left: 8px">
+				</div>
+			</div>
+			<div id="proficiencybuttons-container" style="position: absolute; top: 408px;" hidden="hidden">
+				<div id="proficiencybuttons" class="centered" style="display: flex;">
+					<div id = "proficiencybutton-1" class = "proficiencybutton actionbutton backgroundandbordered" onclick="changeProficiency(1)">
+						NO
+					</div>
+					<div id = "proficiencybutton-2" class = "proficiencybutton actionbutton backgroundandbordered" onclick="changeProficiency(2)">
+						OK
+					</div>
+					<div id = "proficiencybutton-3" class = "proficiencybutton actionbutton backgroundandbordered" onclick="changeProficiency(3)">
+						EZ
+					</div>
+				</div>
+			</div>
+			<div id="proficiencybuttons-container" style="position: absolute; top: 480px; left: calc(-40vw + 240px)">
+				<div id="curword-pinyin" class="curwordinfo ellipsisoverflow">
+				
+				</div>
+				<div id="curword-definition" class="curwordinfo ellipsisoverflow">
+					
+				</div>
+				<div id="curword-finishedchars" class="curwordinfo ellipsisoverflow">
+					
+				</div>
+				<div id="studytimer" class="curwordinfo ellipsisoverflow">
+					
+				</div>
+			</div>
+			<div id="wordinfobox" class="wordinfobox backgroundandbordered wordinfobox" hidden="hidden">
+				<div class = "smallpadding smallerfont ellipsisoverflow">
+					Test type: <span id="wordinfo-testtype"></span>
+				</div>
+				<div class = "smallpadding smallerfont ellipsisoverflow">
+					Due: <span id="wordinfo-due"></span>
+				</div>
+				<div class = "smallpadding smallerfont ellipsisoverflow">
+					Strength: <span id="wordinfo-wordstrength" style="font-weight: bold;"></span>
+				</div>
+				<div class = "smallpadding smallerfont ellipsisoverflow">
+					From lists: <span id="wordinfo-fromlists"></span>
+				</div>
+				<div class = "smallpadding smallerfont ellipsisoverflow">
+					Sim/Tra: <span id="wordinfo-simplifiedtraditional"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/static/scripts/study.js"></script>
+{% endblock %}

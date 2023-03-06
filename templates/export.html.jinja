@@ -1,0 +1,20 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block content %}
+	<div class = "centered">
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
+			Enter format:
+			<input class="smallfont" name="format" type="text" id="format" value="[simplified],[pinyin],[english]" style="float: right">
+		</div>
+	</div>
+	<div class = "centered">
+		<button class="bigfont" onclick="doExport()">
+			Export
+		</button>
+	</div>
+	<div class = "centered">
+		<div id = "output" class = "backgroundandbordered smallmargin smallpadding tinyfont">
+			
+		</div>
+	</div>
+	<script src="/static/scripts/export.js"></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+<link rel="preload" href="/static/fonts/robotolatin.woff2" as="font" crossorigin="anonymous" />
+<link rel="preload" href="/static/fonts/robotolatinext.woff2" as="font" crossorigin="anonymous" />
+<title>SwiftHua</title>
+<meta content="SwiftHua" property="og:title" />
+<meta content="Study Chinese" property="og:description" />
+<meta name="description" content="Study Chinese">
+<meta content="https://swifthua.com" property="og:url" />
+<meta content="#0f0" data-react-helmet="true" name="theme-color" />
+<meta name="keywords" content="Chinese, study, learn, Mandarin, characters, words, vocabulary">
+<meta charset="utf-8"/>
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<html lang="en">
+<meta name="SwiftHua" content="Study Chinese">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<link rel="stylesheet" href="/static/global.css">
+<script src="/static/scripts/global.js"></script>
+{% if flaskData is defined %}
+	<!-- load data from flask -->
+	<script>
+		let flaskData = {{ flaskData|tojson() }};
+	</script>
+{% endif %}

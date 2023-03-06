@@ -1,0 +1,100 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% from "nonpage/macros.html.jinja" import strengthGraph %}
+{% block content %}
+	<script src="../static/scripts/chart.js"></script>
+	<script src="../static/scripts/chartjs-adapter-date-fns.bundle.min.js"></script>
+	<div class = "centered">
+		<div class="centered">
+			{{ displayName }}
+		</div>
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
+			Total word strengths:
+			<br>Drawing - {{ userTotalStrengths['draw'] | int }}
+			<br>Pronouncing - {{ userTotalStrengths['pronounce'] | int }}
+			<br>Defining - {{ userTotalStrengths['define'] | int }}
+			<br>Average - {{ userTotalStrengths['avg'] | int }}
+		</div>
+		<div class="centered">
+			<div class = "backgroundandbordered smallmargin smallpadding" style="width: 600px">
+				{{ strengthGraph(userAllStrengthsData, 'allwordstrengths') }}
+			</div>
+		</div>
+		<div class="centered">
+			<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+				<span>Due:</span>{# <span style = "float:right"><a href="/predict">Predict future</a></span> #}
+				<canvas id="duegraph"></canvas>
+				<script>
+					{
+						let data = {
+							datasets: [
+								{
+									label: 'Number due',
+									backgroundColor: 'rgb(255, 0, 0)',
+									borderColor: 'rgb(255, 0, 0)',
+									data: {{ userWordsDueWhen | safe }},
+									parsing: {
+										
+									}
+								}
+							]
+						};
+
+						let config = {
+							type: 'bar',
+							data: data,
+							options: {
+								scales: {
+									x: {
+										title: {
+											display: true,
+											text: 'Day(s) from now'
+										}
+									}
+								}
+							}
+						};
+						
+						let dueGraph = new Chart(document.getElementById('duegraph'), config);
+					}
+				</script>
+			</div>
+		</div>
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
+			{{ userWordCounts['fullylearnedtotal'] }}
+			{% if userWordCounts['fullylearningtotal'] > 0 or userWordCounts['fullylearnedtotal'] > 0 %}
+				Words:
+				{% for curListName in userWordCounts['lists'] %}
+					<br>
+					<br><a href="/list/{{ curListName }}">{{ curListName }}</a>:
+					<br>Learned - {{ userWordCounts['lists'][curListName]['fullylearned'] }}
+					<br>Learning - {{ userWordCounts['lists'][curListName]['fullylearning'] }}
+					{#
+						{% if userWordCounts['lists'][curListName]['notadded'] > 0 %}
+							<br>Not added - {{ userWordCounts['lists'][curListName]['notadded'] }}
+						{% endif %}
+					#}
+				{% endfor %}
+			{% else %}
+				No words added yet :(
+			{% endif %}
+		</div>
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
+			Current list: <a href="/list/{{ userCurList }}">{{ userCurList }}</a> (words will get added from this list)
+			<br>
+			<a href="/lists">Change list</a>
+		</div>
+		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
+			<a href="/queue">View queue</a>
+		</div>
+	</div>
+	<div class = "centered">
+		<div class = "backgroundandbordered smallmargin smallpadding">
+			<a href="/settings">Settings</a>
+		</div>
+	</div>
+	<div class = "centered">
+		<div class = "backgroundandbordered smallmargin smallpadding">
+			<a href="/logout">Logout</a>
+		</div>
+	</div>
+{% endblock %}

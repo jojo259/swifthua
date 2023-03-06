@@ -1,0 +1,40 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block content %}
+	<div class = "centered">
+		Login/Signup
+	</div>
+	<div class = "centered">
+		<div style="display: flex; width: 600px; padding-top: 64px;">
+			<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="float: left; width: 200px;">
+				Login:
+				<br><br>
+				<form action="/login" method="POST">
+					<label for="loginusername">Username:</label><br>
+					<input type="text" class="smallerfont" style="width: 180px" id="loginusername" name="loginusername"><br>
+					<label for="loginpassword">Password:</label><br>
+					<input type="password" class="smallerfont" style="width: 180px" id="loginpassword" name="loginpassword">
+					<input id="login" type="submit" value="Login" class="smallfont"></input>
+				</form>
+			</div>
+			<div style="float: left; font-size:32px; width: 200px;">
+
+			</div>
+			<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="float: right; width: 200px;">
+				Signup:
+				<br><br>
+				<form action="/login" method="POST">
+					<label for="signupusername">Username:</label><br>
+					<input type="text" class="smallerfont" style="width: 180px" id="signupusername" name="signupusername"><br>
+					<label for="signuppassword">Password:</label><br>
+					<input type="password" class="smallerfont" style="width: 180px" id="signuppassword" name="signuppassword">
+					<input id="signup" type="submit" value="Signup" class="smallfont"></input>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class = "centered" style = "color: red; font-size: 32px">
+		{% if error %}
+			<p><strong>Error:</strong> {{ error }}</p>
+		{% endif %}
+	</div>
+{% endblock %}

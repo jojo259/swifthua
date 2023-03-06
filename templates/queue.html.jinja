@@ -1,0 +1,13 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% block content %}
+	<div class = "centered">
+		<div class = "backgroundandbordered smallmargin smallpadding">
+			Queue:
+			{% for curWord in flaskData['queueWords'] %}
+				<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+					{{ curWord['simplified'] }} {{ curWord['testtype'] }} due {{ curWord['readabledue'] }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

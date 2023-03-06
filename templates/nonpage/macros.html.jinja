@@ -1,0 +1,66 @@
+{% macro removeWordButton(curWord = {'_id': ''}) %}
+	<div id="removewordbuttoncontainer-{{ curWord['_id'] }}" class="editoptionstoggled" hidden="hidden">
+		<div onclick="removeWordButton('{{ curWord['_id'] }}')" class="actionbutton backgroundandbordered" style="width: 256px; height: 64px; text-align: center; vertical-align: middle; line-height: 64px; font-size: 24px;">
+			Remove word from list
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro displayGraph(graphId, givenDatasets) %}
+	<canvas id="{{ graphId }}"></canvas>
+	<script>
+		{
+			let data = {
+				datasets: {{ givenDatasets | tojson }}
+			};
+
+			let config = {
+				type: 'line',
+				data: data,
+				options: {
+					elements: {
+						point:{
+							radius: 0,
+						}
+					},
+					scales: {
+						x: {
+							type: 'time',
+							parsing: false,
+						},
+					},
+					plugins: {
+						legend: {
+							display: false,
+						},
+						tooltip: {
+							enabled: false,
+						}
+					}
+				}
+			};
+			
+			let newGraph = new Chart(document.getElementById("{{ graphId }}"), config);
+		}
+	</script>
+{% endmacro %}
+
+datasets: [
+	{
+		label: 'Drawing',
+		borderColor: 'rgb(255, 0, 0)',
+		data: {{ userStrengthData | safe }},
+		parsing: {
+			xAxisKey: 'date',
+			yAxisKey: 'draw'
+		}
+	},
+]
+
+{% macro strengthGraph(strengthDatas, graphId, lineLabel = 'Strength', lineColor = 'rgba(255, 0, 0, 0.05') %}
+	{% set formattedDatas = [] %}
+	{% for curData in strengthDatas %}
+		{% set dummy = formattedDatas.append({'label': lineLabel, 'borderColor': lineColor, 'data': curData}) %}
+	{% endfor %}
+	{{ displayGraph(graphId, formattedDatas) }}
+{% endmacro %}

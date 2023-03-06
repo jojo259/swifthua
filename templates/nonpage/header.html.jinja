@@ -1,0 +1,56 @@
+<header>
+	<div style="background-color: #252525; outline: 3px solid #222; height: 108px">
+		<div style="height: 96px; position: relative; display: flex; flex: 1; padding: 8px; justify-content: center; z-index: 9">
+			<div style="display: flex; margin-right: auto;">
+				<div style="margin-top: 12px;">
+					<a href="/go"><img src="/static/images/home.png" {% if onStudyPage == True %} class="hide1200" {% endif %} style="width: 64px; height: 64px; padding-left: 8px; padding-right: 8px;" title="Study"></a>
+					{% if flaskData['curUsername'] != None %}
+						<a href="/settings"><img src="/static/images/settings.png" {% if onStudyPage == True %} class="hide1200" {% endif %} style="width: 64px; height: 64px; padding-left: 8px; padding-right: 8px;" title="Settings"></a>
+					{% endif %}
+					<a href="/lists"><img src="/static/images/lists.png" {% if onStudyPage == True %} class="hide1200" {% endif %} style="width: 64px; height: 64px; padding-left: 8px; padding-right: 8px;" title="Lists"></a>
+					{% if flaskData['curUsername'] != None %}
+						<a id="profile-button" href="/profile/{{ flaskData['curUsername'] }}"><img src="/static/images/loginactive.png" style="width: 64px; height: 64px; padding-left: 8px; padding-right: 8px" title="Profile"></a>
+					{% else %}
+						<a id="profile-button" href="/login"><img src="/static/images/login.png" style="width: 64px; height: 64px; padding-left: 8px; padding-right: 8px" title="Login"></a>
+					{% endif %}
+				</div>
+				<div id="login-status" class="hide1900" style="width: 200px; word-wrap: break-word; font-size: 32px; margin-left: 8px; padding-top: 8px; padding-left: 8px; color: #eee">
+					{% if flaskData['curUsername'] != None %}
+						Logged in as {{ flaskData['displayName'] }}
+					{% else %}
+						Not logged in
+					{% endif %}
+				</div>
+			</div>
+			<div class = "centeredabsolute">
+				<div id="statusmessage" style="font-size: max(4vw, 28px); line-height: 86px; text-align:center;">
+					
+				</div>
+			</div>
+			{% if onStudyPage == True and flaskData['curUsername'] != None %}
+				<div style="margin-left: auto; margin-right: 8px; padding-top: 24px;">
+					<div id="queueinfo" style="font-size: 32px;" hidden="hidden">
+						<a style="color: #eee" href="/queue">
+							Queue:
+							<span id="queuesizenum">
+								
+							</span>
+						</a>
+					</div>
+					<div id="extraqueueinfo" class="backgroundandbordered smallpadding smallerfont" style="position: absolute; width:400px; right: 8px; top: 120px">
+						Total due in next hour: <span id="queuesizenum-hour"></span>
+						<br>Total due in next 4 hours: <span id="queuesizenum-fourhours"></span>
+						<br>Total due in next 12 hours: <span id="queuesizenum-twelvehours"></span>
+						<br>Total due in next 24 hours: <span id="queuesizenum-twentyfourhours"></span>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div id="tempnotifications" style="position: fixed; top: 32px; right: 32px; z-index: 999">
+
+	</div>
+	<div style="height: 24px"> <!-- spacer -->
+		
+	</div>
+</header>

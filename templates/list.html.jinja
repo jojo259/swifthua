@@ -1,0 +1,170 @@
+{% extends "nonpage/layout.html.jinja" %}
+{% from "nonpage/macros.html.jinja" import removeWordButton %}
+<!-- rewrite page -->
+{% block content %}
+	<div class = "centered">
+		<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+			List: {{ flaskData['listDisplayName'] }} ({{ flaskData['listLength'] }} words)
+		</div>
+	</div>
+	<div class = "centered">
+		<button onclick="location.href='/list/{{ flaskData['listName'] }}/export'" style="font-size: 32px;">
+			Export list
+		</button>
+	</div>
+	{% if flaskData['listActive'] == True %}
+		<div class = "centered">
+			<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="listdisabledraw">Disable draw tests for this list:</label>
+					<input name="listdisabledraw" type="checkbox" id="listdisabledraw" style="float: right"
+						{% if flaskData['listName'] in flaskData['userSettings']['listsDisableDraw'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="listdisablepronounce">Disable pronounce tests for this list:</label>
+					<input name="listdisablepronounce" type="checkbox" id="listdisablepronounce" style="float: right"
+						{% if flaskData['listName'] in flaskData['userSettings']['listsDisablePronounce'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="listdisabledefine">Disable define tests for this list:</label>
+					<input name="listdisabledefine" type="checkbox" id="listdisabledefine" style="float: right"
+						{% if flaskData['listName'] in flaskData['userSettings']['listsDisableDefine'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
+				<button onclick="saveListTestSettings()" class="smallfont">
+					Save
+				</button>
+			</div>
+		</div>
+	{% endif %}
+	{% if flaskData['userOwnsList'] == True %}
+		<div class = "centered">
+			<button id="editlistbutton" onclick="toggleEditOptions()" class="smallfont">
+				Edit list
+			</button>
+		</div>
+		<div class = "editoptionstoggled" hidden = "hidden">
+			<div class = "centered">
+				<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+					Edit list display name:
+					<input class="smallfont" name="listdisplayname" type="text" id="listdisplayname" value = {{ flaskData['listDisplayName'] }}>
+					<button onclick="saveListDisplayName()" class="smallfont">
+						Save
+					</button>
+				</div>
+			</div>
+			<div class = "centered">
+				<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+					Enter words:
+					<textarea id="addwordsbox" rows="20" cols="60" onkeypress="checkAddWordsBox()" onchange="checkAddWordsBox()" onkeyup="checkAddWordsBox()"></textarea> <!-- possibly redundant event(s) -->
+					
+					<br>
+
+					<button onclick="addWordsButton()" class="smallfont">
+						Add words
+					</button>
+				</div>
+			</div>
+			<div class = "centered">
+				Detected potential words (<span id="detectedwordsnum">0</span>):
+			</div>
+			<div class = "centered">
+				<div id="detectedwords" class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
+					
+				</div>
+			</div>
+			<div class = "centered">
+				<button onclick="deleteListButton()" class="smallfont" style="color: #811">
+					Delete list
+				</button>
+			</div>
+			<div class = "centered">
+				<div id="actuallydeletelistdiv" hidden="hidden" class = "backgroundandbordered smallpadding smallmargin tinyfont">
+					Are you sure?
+					<br>This will delete the list for everyone who uses it
+					<br>Click <span id="deletelisttext" class="clickabletext" style="color: red" onclick="actuallyDeleteList()">here</span> to delete list
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<div class = "centered">
+		{% if flaskData['curUsername'] != None %}
+			Added ({{ flaskData['listWordsDictLearning']|length }} words):
+			<div class = "backgroundandbordered smallpadding smallmargin smallfont" style = "width:860px">
+				{% for curWord in flaskData['listWordsDictLearning'].values() %}
+					<div class = "backgroundandbordered smallpadding smallmargin smallfont">
+						<a href="/word/{{ curWord['_id'] }}">{{ curWord['_id'] }}</a> - {{ curWord['pinyin'] }} - {{ curWord['english'] }}
+						<div class = "editoptionstoggled smallfont">
+							<br>Word strength:
+							
+							<br>Drawing:
+							{% set drawColor = 'red' %}
+							{% if curWord['userData']['wordstrength']['draw'] >= 7 %}
+								{% set drawColor = 'orange' %}
+							{% endif %}
+							{% if curWord['userData']['wordstrength']['draw'] >= 13 %}
+								{% set drawColor = 'green' %}
+							{% endif %}
+
+							<span style = "font-weight: bold; float: right; color: {{ drawColor }}">
+								{{ curWord['userData']['wordstrength']['draw'] | int }}
+							</span>
+
+							<br>Pronouncing:
+							{% set pronounceColor = 'red' %}
+							{% if curWord['userData']['wordstrength']['pronounce'] >= 7 %}
+								{% set pronounceColor = 'orange' %}
+							{% endif %}
+							{% if curWord['userData']['wordstrength']['pronounce'] >= 13 %}
+								{% set pronounceColor = 'green' %}
+							{% endif %}
+
+							<span style = "font-weight: bold; float: right; color: {{ pronounceColor }}">
+								{{ curWord['userData']['wordstrength']['pronounce'] | int }}
+							</span>
+							
+							<br>Defining:
+							{% set defineColor = 'red' %}
+							{% if curWord['userData']['wordstrength']['define'] >= 7 %}
+								{% set defineColor = 'orange' %}
+							{% endif %}
+							{% if curWord['userData']['wordstrength']['define'] >= 13 %}
+								{% set defineColor = 'green' %}
+							{% endif %}
+
+							<span style = "font-weight: bold; float: right; color: {{ defineColor }}">
+								{{ curWord['userData']['wordstrength']['define'] | int }}
+							</span>
+						</div>
+
+						{{ removeWordButton(curWord) }}
+					</div>
+				{% endfor %}
+			</div>
+			Not Added ({{ flaskData['listWordsDictUnadded']|length }} words):
+		{% endif %}
+		<div class = "backgroundandbordered smallpadding smallmargin smallfont" style = "width:860px">
+			{% for curWord in flaskData['listWordsDictUnadded'].values() %}
+				<a href="/word/{{ curWord['_id'] }}">{{ curWord['_id'] }}</a> - {{ curWord['pinyin'] }} - {{ curWord['english'] }}
+				{% if flaskData['curUsername'] != None %}
+					<div id="addwordbuttoncontainer-{{ curWord['_id'] }}" class="editoptionstoggled">
+						<div onclick="addWordButton('{{ curWord['_id'] }}')" class="actionbutton backgroundandbordered" style="width: 256px; height: 64px; text-align: center; vertical-align: middle; line-height: 64px; font-size: 24px;">
+							Add word to queue
+						</div>
+					</div>
+					{{ removeWordButton(curWord) }}
+				{% endif %}
+				<br>
+			{% endfor %}
+		</div>
+	</div>
+	<script src="../static/scripts/list.js"></script>
+{% endblock %}

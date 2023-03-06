@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% include "nonpage/htmlhead.html.jinja" %}
+		<style>
+			.loginbutton{
+				width: 200px;
+				height: 66px;
+
+				font-size: 48px;
+				font-family:Roboto;
+
+				cursor: pointer;
+
+				background-color: #888;
+				border: 2px black solid;
+				color: black;
+			}
+			.startbutton{
+				width: 300px;
+				height: 100px;
+
+				font-size: 64px;
+				font-family:Roboto;
+				font-weight: bold;
+
+				cursor: pointer;
+
+				background-color: #292;
+				border: 2px black solid;
+				color: white;
+			}
+
+			.landing-actionbutton{
+				cursor: pointer;
+				user-select:none;
+			}
+			.landing-actionbutton:hover{
+				filter: brightness(0.8);
+			}
+			.landing-actionbutton:active {
+				position: relative;
+				top: 1px;
+			}
+		</style>
+	</head>
+	<body style="background-color:#333333">
+		<div style="position: absolute; top: 32px; right: 32px;">
+			<button class = "loginbutton landing-actionbutton" onclick="location.href='/login'" type="button">Login</button>
+		</div>
+		<div class = "centered">
+			<h1>SwiftHua</h1>
+		</div>
+		<div class = "centered smallfont" style = "width: 50vw">
+			SwiftHua is a spaced repetition tool specifically designed for building Chinese vocabulary. It tests you as you draw the characters stroke by stroke to ensure you remember them.
+		</div>
+		<div class = "centered" style = "padding-top: 100px">
+			<button class = "startbutton landing-actionbutton" onclick="location.href='/go'" type="button">Start</button>
+		</div>
+	</body>
+</html>
