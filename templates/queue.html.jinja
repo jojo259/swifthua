@@ -3,9 +3,12 @@
 	<div class = "centered">
 		<div class = "backgroundandbordered smallmargin smallpadding">
 			Queue:
+			<br>
 			{% for curWord in flaskData['queueWords'] %}
-				<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 600px">
-					{{ curWord['simplified'] }} {{ curWord['testtype'] }} due {{ curWord['readabledue'] }}
+				<div class = "backgroundandbordered smallmargin smallpadding smallfont" style="width: 256px; height: 256px; display: inline-block;">
+					<a href="/word/{{ curWord['simplified'] }}">{{ curWord['simplified'] }}</a>
+					<br>{{ curWord['testtype'].capitalize() }}
+					<br>{{ curWord['readabledue'] }}
 				</div>
 			{% endfor %}
 		</div>
