@@ -45,18 +45,6 @@
 	</script>
 {% endmacro %}
 
-datasets: [
-	{
-		label: 'Drawing',
-		borderColor: 'rgb(255, 0, 0)',
-		data: {{ userStrengthData | safe }},
-		parsing: {
-			xAxisKey: 'date',
-			yAxisKey: 'draw'
-		}
-	},
-]
-
 {% macro strengthGraph(strengthDatas, graphId, lineLabel = 'Strength', lineColor = 'rgba(255, 0, 0, 0.05') %}
 	{% set formattedDatas = [] %}
 	{% for curData in strengthDatas %}
