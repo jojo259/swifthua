@@ -60,14 +60,21 @@
 			</div>
 		</div>
 		<div class = "backgroundandbordered smallmargin smallpadding smallfont">
-			{{ userWordCounts['fullylearnedtotal'] }}
+			All lists:
+			<br>Fully learned - {{ userWordCounts['fullylearnedtotal'] }}
+			<br>Learning - {{ userWordCounts['fullylearningtotal'] }}
+			<br>Learned define - {{ userWordCounts['learnedtotaldefine'] }}
+			<br>Learned pronounce - {{ userWordCounts['learnedtotalpronounce'] }}
+			<br>Learned draw - {{ userWordCounts['learnedtotaldraw'] }}
 			{% if userWordCounts['fullylearningtotal'] > 0 or userWordCounts['fullylearnedtotal'] > 0 %}
-				Words:
 				{% for curListName in userWordCounts['lists'] %}
 					<br>
 					<br><a href="/list/{{ curListName }}">{{ curListName }}</a>:
 					<br>Learned - {{ userWordCounts['lists'][curListName]['fullylearned'] }}
 					<br>Learning - {{ userWordCounts['lists'][curListName]['fullylearning'] }}
+					<br>Learned define - {{ userWordCounts['lists'][curListName]['learneddefine'] }}
+					<br>Learned pronounce - {{ userWordCounts['lists'][curListName]['learnedpronounce'] }}
+					<br>Learned draw - {{ userWordCounts['lists'][curListName]['learneddraw'] }}
 					{#
 						{% if userWordCounts['lists'][curListName]['notadded'] > 0 %}
 							<br>Not added - {{ userWordCounts['lists'][curListName]['notadded'] }}
