@@ -1,9 +1,11 @@
 "use strict"
 
+/*
 // overriding console.log in production
 if (!window.location.host.includes("5000")) {
 	console.log = function(){};
 }
+*/
 
 function getCurWordChar() {
 	if (flaskData.useTraditional) {
