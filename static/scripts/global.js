@@ -109,3 +109,7 @@ function updateQueryString(key, value, url) { // https://stackoverflow.com/a/116
         }
     }
 }
+
+window.addEventListener('error', event => {
+	createTempNotification(`Error: ${event.message}`);
+});
