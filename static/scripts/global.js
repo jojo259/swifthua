@@ -72,6 +72,8 @@ function createTempNotification(notiText) {
 	newDiv.textContent = notiText;
 
 	document.getElementById("tempnotifications").appendChild(newDiv);
+
+	console.log(`created temp notification: ${notiText}`);
 }
 
 function logApiMessage(apiRoute, respData) {
