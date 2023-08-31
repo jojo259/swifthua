@@ -697,6 +697,9 @@ function userCompletedWord(completedWord, wordProficiency) {
 		if (flaskData.curUsername == null) {
 			setTimeout(function(){createTempNotification("Login to save stats")}, 1000);
 		}
+	})
+	.catch((error) => {
+		createTempNotification(`Sending completed word failed: ${error.message}`);
 	});
 }
 
