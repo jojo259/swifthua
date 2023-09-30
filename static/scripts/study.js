@@ -17,6 +17,7 @@ let wordCompleted = false;
 let charCompleted = false;
 
 let gotStrokeHints = 0;
+let tookTooLong = false;
 
 let charDatas = {};
 
@@ -139,6 +140,10 @@ class StudyTimer {
 		if (document.getElementById("statusmessage").textContent != "Next word (click)") {
 			if (Date.now() - userStartedCardAt < 5 * 1000) {
 				this.incrementTimer();
+			}
+			else if (curTestType == "define" || curTestType == "pronounce") {
+				doCanvasFeedback("#f90");
+				tookTooLong = true;
 			}
 		}
 	}
@@ -1202,6 +1207,7 @@ function goToNextWord() {
 	strokesList = [];
 	usedHint = false;
 	gotStrokeHints = 0;
+	tookTooLong = false;
 	wordCompleted = false;
 	charCompleted = false;
 	wrongStrokes = 0;
@@ -1282,6 +1288,10 @@ function goToWordEnd() {
 		document.getElementById("proficiencybuttons-container").removeAttribute("hidden");
 
 		setCurStatusMessage("Next word (click)");
+	}
+
+	if (tookTooLong && (curTestType == "define" || curTestType == "pronounce")) {
+		changeProficiency(2);
 	}
 }
 
