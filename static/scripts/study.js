@@ -137,7 +137,7 @@ class StudyTimer {
 
 	checkIfNeedToIncrementTimer() {
 		if (document.getElementById("statusmessage").textContent != "Next word (click)") {
-			if (Date.now() - userStartedCardAt < 30 * 1000) {
+			if (Date.now() - userStartedCardAt < 5 * 1000) {
 				this.incrementTimer();
 			}
 		}
