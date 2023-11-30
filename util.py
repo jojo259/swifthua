@@ -22,7 +22,7 @@ def getFlaskData(curUsername, userDoc = None):
 
 	userSettings = getUserSettings(curUsername, userDoc)
 
-	userSettingsFieldsToGet = {'volume': 'curVolume', 'traditional': 'useTraditional', 'pronouncehard': 'pronounceHard', 'definehard': 'defineHard', 'disabletestdraw': 'disableTestDraw', 'disabletestpronounce': 'disableTestPronounce', 'disabletestdefine': 'disableTestDefine', 'playqueueaudio': 'playQueueAudio', 'curlist': 'curList', 'discord': 'discord', 'email': 'email', 'listsdisabledraw': 'listsDisableDraw', 'listsdisablepronounce': 'listsDisablePronounce', 'listsdisabledefine': 'listsDisableDefine'}
+	userSettingsFieldsToGet = {'volume': 'curVolume', 'traditional': 'useTraditional', 'pronouncehard': 'pronounceHard', 'definehard': 'defineHard', 'disabletestdraw': 'disableTestDraw', 'disabletestpronounce': 'disableTestPronounce', 'disabletestdefine': 'disableTestDefine', 'playqueueaudio': 'playQueueAudio', 'curlist': 'curList', 'discord': 'discord', 'email': 'email', 'listsdisabledraw': 'listsDisableDraw', 'listsdisablepronounce': 'listsDisablePronounce', 'listsdisabledefine': 'listsDisableDefine', 'disablequeuedisplay': 'disableQueueDisplay'}
 
 	sendUserSettings = {}
 	for settingsFieldName, newFieldName in userSettingsFieldsToGet.items():

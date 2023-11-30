@@ -75,6 +75,14 @@
 				</div>
 
 				<br>
+				<div style="margin-top: 8px">
+					<label class="smallfont" style="float:left" for="disablequeuedisplay">Disable queue display:</label>
+					<input name="disablequeuedisplay" type="checkbox" id="disablequeuedisplay" style="float: right"
+						{% if flaskData['userSettings']['disableQueueDisplay'] %} checked {% endif %}
+					>
+				</div>
+
+				<br>
 				<br>
 				<hr style="height:1px;border-width:0;background-color:#eee">
 

@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			{% if onStudyPage == True and flaskData['curUsername'] != None %}
-				<div style="margin-left: auto; margin-right: 8px; padding-top: 24px;">
+				<div style="margin-left: auto; margin-right: 8px; padding-top: 24px;" {% if flaskData['userSettings']['disableQueueDisplay'] == True %} hidden="hidden" {% endif %}>
 					<div id="queueinfo" style="font-size: 32px;" hidden="hidden">
 						<a style="color: #eee" href="/queue">
 							Queue:

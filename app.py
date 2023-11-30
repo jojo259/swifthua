@@ -273,7 +273,7 @@ def settingsPage(curUsername):
 
 		newSettings = {}
 
-		booleanSettings = ['traditional', 'definehard', 'pronouncehard', 'disabletestdraw', 'disabletestdefine', 'disabletestpronounce', 'playqueueaudio']
+		booleanSettings = ['traditional', 'definehard', 'pronouncehard', 'disabletestdraw', 'disabletestdefine', 'disabletestpronounce', 'playqueueaudio', 'disablequeuedisplay']
 
 		for curField in booleanSettings:
 			newSettings[curField] = True if requestJson.get(curField) == 'on' else False
