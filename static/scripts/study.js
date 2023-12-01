@@ -123,7 +123,7 @@ class QueueManager {
 
 	decrementQueueSizeNum() {
 		this.setQueueSizeNum(this.curQueueSize - 1);
-		if (this.curQueueSize == 0) {
+		if (this.curQueueSize <= 0) {
 			createTempNotification("Queue finished for now!");
 		}
 	}
